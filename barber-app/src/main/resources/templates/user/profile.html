@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Profilo Utente</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<header>
+    <nav class="navbar" >
+        <a href="/" class="logo">
+            <img src="/images/logo.png" alt="Logo">
+        </a>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/about">Chi Siamo</a>
+            <a href="/contact">Contatti</a>
+            <div class="user-menu">
+                <a class="user-icon">
+                    <img src="/images/profile1.png" alt="profile">
+                </a>
+                <div class="dropdown-content">
+                    <!-- Check if user is authenticated -->
+                    <div th:if="${authentication != null}">
+                        <!-- Display the profile link and the username -->
+                        <a href="/profile">
+                            <span th:text="${authentication.getUsername()}">Profile</span>
+                        </a>
+                        <a href="/logout"><span>logout</span></a>
+                    </div>
+                    <!-- Display register and login links if user is not authenticated -->
+                    <div th:if="${authentication == null}">
+                        <a href="/register">Registrati</a>
+                        <a href="/login">Login</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<h1 class="centered-title">I tuoi dati</h1>
+
+<div class="profile-container">
+    <div class="profile-box">
+        <p><strong>Nome:</strong> <span th:text="${authentication.getUtente().getNome()}"></span></p>
+        <p><strong>Cognome:</strong> <span th:text="${authentication.getUtente().getCognome()}"></span></p>
+        <p><strong>Data di Nascita:</strong> <span th:text="${authentication.getUtente().getDataNascita().toString()}"></span></p>
+        <p><strong>Email:</strong> <span th:text="${authentication.getUtente().getEmail().toString()}"></span></p>
+        <p><strong>Username:</strong> <span th:text="${authentication.getCredentials().getUsername()}"></span></p>
+    </div>
+</div>
+
+<h1 class="centered-title">Le tue prenotazioni</h1>
+
+<div class="flash-message" th:if="${successMessage != null}">
+    <span th:text="${successMessage}"></span>
+</div>
+
+<div class="userProfile-container">
+    <div class="userProfile-cards">
+        <div th:each="prenotazione : ${prenotazioni}" class="userProfile-card">
+            <div class="userProfile-card-content">
+                <p th:text="'Data: ' + ${prenotazione.getGiornoLavorativo().data}"></p>
+                <p th:text="'Ora inizio: ' + ${prenotazione.orarioInizio}"></p>
+                <p th:text="'Ora fine: ' + ${prenotazione.getOrarioFine().toString()}"></p>
+                <p th:text="'Tipo servizio: ' + ${prenotazione.getTipoServizio().getNome()}"></p>
+                <p th:text="'Con il barbiere: ' + ${prenotazione.getGiornoLavorativo().getBarbiere().getNome().toString()}"></p>
+            </div>
+            <div class="userProfile-card-action">
+                <div th:if="${prenotazione.getGiornoLavorativo().getData().isAfter(today)}">
+                    <a th:href="@{'/user/delete' + '/' + ${prenotazione.getId()}}" class="userProfile-cancel-btn">Cancella prenotazione</a>
+                </div>
+                <br>
+                <div class="userProfile-completed-box" th:if="${prenotazione.getGiornoLavorativo().getData().isBefore(today) || prenotazione.getGiornoLavorativo().getData().isEqual(today)}">
+                    <strong> completata </strong>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    // Show the flash message and hide it after 5 seconds
+    document.addEventListener("DOMContentLoaded", function() {
+        const flashMessage = document.querySelector(".flash-message");
+        if (flashMessage) {
+            flashMessage.style.display = "block";
+            setTimeout(() => {
+                flashMessage.style.display = "none";
+            }, 5000); // 5 seconds
+        }
+    });
+</script>
+
+<footer>
+</footer>
+</body>
+</html>

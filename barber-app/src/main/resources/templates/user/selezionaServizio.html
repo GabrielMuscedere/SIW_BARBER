@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Seleziona Servizio</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<header>
+    <nav class="navbar" >
+        <a href="/" class="logo">
+            <img src="/images/logo.png" alt="Logo">
+        </a>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/about">Chi Siamo</a>
+            <a href="/contact">Contatti</a>
+            <div class="user-menu">
+                <a class="user-icon">
+                    <img src="/images/profile1.png" alt="profile">
+                </a>
+                <div class="dropdown-content">
+                    <!-- Check if user is authenticated -->
+                    <div th:if="${authentication != null}">
+                        <!-- Display the profile link and the username -->
+                        <a href="/profile">
+                            <span th:text="${authentication.getUsername()}">Profile</span>
+                        </a>
+                        <a href="/logout"><span>logout</span></a>
+                    </div>
+                    <!-- Display register and login links if user is not authenticated -->
+                    <div th:if="${authentication == null}">
+                        <a href="/register">Registrati</a>
+                        <a href="/login">Login</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<div th:if="${barbiere != null}" class="serviceSelectedBarber-selected">
+    <h2>Hai selezionato il barbiere: <strong th:text="${barbiere.nome} + ' ' + ${barbiere.cognome}"></strong></h2>
+</div>
+<div class="serviceSelectedBarber-title">
+    <h3>Prenota un servizio:</h3>
+</div>
+
+<!-- Container for the service cards -->
+<div class="serviceSelectedBarber-container">
+    <div th:each="servizio : ${servizi}" class="serviceSelectedBarber-card">
+        <div class="serviceSelectedBarber-card-content">
+            <!-- Assuming you have a 'imageUrl' field in your 'servizio' model -->
+            <img th:src="@{'/uploads/' + ${servizio.imageName}}" alt="Immagine del Servizio" class="serviceSelectedBarber-image"/>
+            <h4 th:text="${servizio.nome}">Servizio Nome</h4>
+            <p th:text="'Durata: ' + ${servizio.durata} + ' minuti'">durata</p>
+            <p th:text="'Costo: ' + ${servizio.prezzo} + ' euro'">€ Prezzo</p>
+        </div>
+        <a th:href="@{'/user/selectedBarber' + '/' + ${barbiere.id} + '/selectedService' +  '/' + ${servizio.getId()}}">
+            <button  type="button" class="serviceSelectedBarber-select-btn">Seleziona</button>
+        </a>
+    </div>
+</div>
+
+<footer>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

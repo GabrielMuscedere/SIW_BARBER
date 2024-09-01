@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/styles.css">
+    <title>barber-app - register</title>
+</head>
+<body>
+<header>
+    <nav class="navbar" >
+        <a href="/" class="logo">
+            <img src="/images/logo.png" alt="Logo">
+        </a>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/about">Chi Siamo</a>
+            <a href="/contact">Contatti</a>
+            <div class="user-menu">
+                <a class="user-icon">
+                    <img src="/images/profile1.png" alt="profile">
+                </a>
+                <div class="dropdown-content">
+                    <!-- Check if user is authenticated -->
+                    <div th:if="${authentication != null}">
+                        <!-- Display the profile link and the username -->
+                        <a href="/profile">
+                            <span th:text="${authentication.getUsername()}">Profile</span>
+                        </a>
+                        <a href="/logout"><span>logout</span></a>
+                    </div>
+                    <!-- Display register and login links if user is not authenticated -->
+                    <div th:if="${authentication == null}">
+                        <a href="/register">Registrati</a>
+                        <a href="/login">Login</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+<div>
+    <div class="form-container registration-form">
+        <h2>Registrazione</h2>
+        <form th:action="@{/register}" th:object="${utente}" method="post">
+            <fieldset>
+                <legend>Informazioni Utente</legend>
+                <div class="form-group">
+                    <label for="first-name">Nome</label>
+                    <input type="text" id="first-name" th:field="*{nome}" required>
+                </div>
+                <div class="form-group">
+                    <label for="last-name">Cognome</label>
+                    <input type="text" id="last-name" th:field="*{cognome}" required>
+                </div>
+                <div class="form-group">
+                    <label for="birthdate">Data di Nascita</label>
+                    <input type="date" id="birthdate" th:field="*{dataNascita}" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" th:field="*{email}" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Numero di Telefono</label>
+                    <input type="tel" id="phone" th:field="*{numeroTelefono}" required>
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>Credenziali</legend>
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" th:field="${credentials.username}" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" th:field="${credentials.password}" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirm-password">Ripeti Password</label>
+                    <input type="password" id="confirm-password" required>
+                </div>
+            </fieldset>
+            <div class="form-group">
+                <input type="submit" value="Registrati">
+            </div>
+        </form>
+    </div>
+</div>
+<footer>
+</footer>
+</body>
+</html>

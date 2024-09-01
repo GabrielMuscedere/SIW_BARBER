@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/styles.css">
+    <title>Barber App - Seleziona Barbiere</title>
+</head>
+
+<body>
+<header>
+    <nav class="navbar">
+        <a href="/admin/indexAdmin" class="logo">
+            <img src="/images/logo.png" alt="Logo">
+        </a>
+        <div class="nav-links">
+            <a href="/admin/indexAdmin">Home</a>
+            <div class="user-menu">
+                <a class="user-icon">
+                    <img src="/images/profile1.png" alt="profile">
+                </a>
+                <div class="dropdown-content">
+                    <div th:if="${authentication != null}">
+                        <a href="/admin/profile">
+                            <span th:text="${authentication.getUsername()}">Profile</span>
+                        </a>
+                        <a href="/logout"><span>logout</span></a>
+                    </div>
+                    <div th:if="${authentication == null}">
+                        <a href="/register">Registrati</a>
+                        <a href="/login">Login</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<main class="barber-selection-container">
+    <h2 class="center-title">Barbieri</h2>
+    <div class="barber-card-container">
+        <div th:each="barber : ${barbers}" class="barber-card">
+            <a th:href="@{'/admin/giorniLavorativi/' + ${barber.id}}" class="barber-link">
+                <img th:src="@{'/uploads/' + ${barber.imageUrl}}" alt="Barbiere" class="barber-image" />
+                <div class="barber-info">
+                    <p><strong th:text="${barber.nome}"></strong></p>
+                    <p><strong th:text="${barber.cognome}"></strong></p>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div th:if="${barbers.size() == 0}">
+        <p>Nessun barbiere presente.</p>
+    </div>
+</main>
+
+<footer class="footer">
+    <div class="footer-content">
+        <p>&copy; 2024 Barber App. Tutti i diritti riservati.</p>
+    </div>
+</footer>
+
+</body>
+
+</html>

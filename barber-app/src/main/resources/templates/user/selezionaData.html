@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/styles.css">
+    <title>Seleziona Data</title>
+</head>
+
+<body>
+<header>
+    <nav class="navbar" >
+        <a href="/" class="logo">
+            <img src="/images/logo.png" alt="Logo">
+        </a>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/about">Chi Siamo</a>
+            <a href="/contact">Contatti</a>
+            <div class="user-menu">
+                <a class="user-icon">
+                    <img src="/images/profile1.png" alt="profile">
+                </a>
+                <div class="dropdown-content">
+                    <!-- Check if user is authenticated -->
+                    <div th:if="${authentication != null}">
+                        <!-- Display the profile link and the username -->
+                        <a href="/profile">
+                            <span th:text="${authentication.getUsername()}">Profile</span>
+                        </a>
+                        <a href="/logout"><span>logout</span></a>
+                    </div>
+                    <!-- Display register and login links if user is not authenticated -->
+                    <div th:if="${authentication == null}">
+                        <a href="/register">Registrati</a>
+                        <a href="/login">Login</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header><!-- Se ci sono errori, mostriamoli qui -->
+<div th:if="${errors} != null">
+    <ul>
+        <li th:each="error : ${errors}" th:text="${error.defaultMessage}"></li>
+    </ul>
+</div>
+
+<h1 class="centered-title" th:text="'Seleziona la data in cui vuoi prenotare il ' + ${servizio.nome}"></h1>
+
+<div class="selezionaData-container">
+    <div th:if="${barbiere.getGiorniLavorativi() == null || barbiere.getGiorniLavorativi().isEmpty()}">
+        <p>Il barbiere non ha giorni di lavoro disponibili</p>
+    </div>
+    <div th:if="${barbiere.getGiorniLavorativi() != null && !barbiere.getGiorniLavorativi().isEmpty()}">
+        <div class="selezionaData-carousel">
+            <div class="selezionaData-cards">
+                <div th:each="giorno : ${giorniDopoOggi}" class="selezionaData-card">
+                    <a th:href="@{'/user/' + ${giorno.id} + '/' + ${servizio.getId()}}">
+                        <div th:if="${giorno!=null}">
+                            <span th:text="'Prenota ' + ${servizio.getNome()} + ' con ' + ${barbiere.getNome()} + ' il ' + ${giorno.getData().toString()}"></span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const scrollContainer = document.querySelector('.selezionaData-cards');
+    const leftButton = document.createElement('button');
+    const rightButton = document.createElement('button');
+
+    leftButton.classList.add('scroll-button', 'left');
+    rightButton.classList.add('scroll-button', 'right');
+    leftButton.innerHTML = '&#8249;'; // Freccia sinistra
+    rightButton.innerHTML = '&#8250;'; // Freccia destra
+
+    document.querySelector('.selezionaData-container').appendChild(leftButton);
+    document.querySelector('.selezionaData-container').appendChild(rightButton);
+
+    leftButton.addEventListener('click', () => {
+        scrollContainer.scrollBy({ left: -300, behavior: 'smooth' });
+    });
+
+    rightButton.addEventListener('click', () => {
+        scrollContainer.scrollBy({ left: 300, behavior: 'smooth' });
+    });
+</script>
+
+</body>
+</html>
