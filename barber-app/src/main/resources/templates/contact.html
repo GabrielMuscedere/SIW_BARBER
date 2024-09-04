@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html lang="it">
 
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/styles.css">
-    <title>barber-app - contatti</title>
+    <title>barber-app - Contatti</title>
 </head>
 
 <body>
 <header>
-    <nav class="navbar" >
+    <nav class="navbar">
         <a href="/" class="logo">
             <img src="/images/logo.png" alt="Logo">
         </a>
@@ -23,15 +23,12 @@
                     <img src="/images/profile1.png" alt="profile">
                 </a>
                 <div class="dropdown-content">
-                    <!-- Check if user is authenticated -->
                     <div th:if="${authentication != null}">
-                        <!-- Display the profile link and the username -->
                         <a href="/profile">
                             <span th:text="${authentication.getUsername()}">Profile</span>
                         </a>
                         <a href="/logout"><span>logout</span></a>
                     </div>
-                    <!-- Display register and login links if user is not authenticated -->
                     <div th:if="${authentication == null}">
                         <a href="/register">Registrati</a>
                         <a href="/login">Login</a>
@@ -42,12 +39,45 @@
     </nav>
 </header>
 
+<main class="contactPage-container">
+    <h1 class="contactPage-title">Contattaci</h1>
+    <p class="contactPage-subtitle">Compila il modulo per inviarci un messaggio.</p>
+    <form class="contactPage-form">
+        <div class="contactPage-form-group">
+            <label for="email">Il tuo messaggio:</label>
+            <textarea id="email" name="email" placeholder="Scrivi qui il tuo messaggio..." rows="6"></textarea>
+        </div>
+        <button type="button" class="contactPage-btn" onclick="sendEmail()">Invia</button>
+    </form>
+</main>
 
-<footer>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 
-
+<footer class="footer">
+    <p>&copy; 2024 Barber App. Tutti i diritti riservati.</p>
 </footer>
 
-
-
+<script>
+    function sendEmail() {
+        const emailBody = document.getElementById('email').value;
+        const mailtoLink = `mailto:gabrielmuscedere@gmail.com?subject=Contatto da Barber App&body=${encodeURIComponent(emailBody)}`;
+        window.location.href = mailtoLink;
+    }
+</script>
 </body>
+
+</html>

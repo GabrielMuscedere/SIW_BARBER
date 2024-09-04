@@ -1197,12 +1197,12 @@ form button[type="submit"]:hover {
 /* Footer generico */
 /* Footer */
 .footer {
+    text-align: center;
     background-color: #343a40;
     color: white;
     padding: 20px;
-    text-align: center;
+    bottom: 0;
     width: 100%;
-    margin-top: auto;
 }
 
 .footer-content {
@@ -1344,19 +1344,24 @@ form button[type="submit"]:hover {
 /*--gestisci servizi--*/
 .gestisciServizi-container {
     padding: 20px;
-    max-width: 400px; /* Ridotta la larghezza per rendere la card più compatta */
+    max-width: 1000px; /* Aumentato per permettere più card affiancate */
     margin: 0 auto;
     text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around; /* Spazio attorno alle card */
 }
 
 .gestisciServizi-card {
     background-color: #f8f9fa;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 15px; /* Ridotto il padding per una card più piccola */
+    padding: 15px;
     margin-bottom: 20px;
     text-align: left;
     transition: transform 0.3s ease;
+    width: 30%; /* Definisce la larghezza di ogni card */
+    box-sizing: border-box; /* Assicura che il padding non aumenti la larghezza complessiva */
 }
 
 .gestisciServizi-card:hover {
@@ -1364,21 +1369,21 @@ form button[type="submit"]:hover {
 }
 
 .gestisciServizi-title {
-    font-size: 18px; /* Ridotto il font per un look più compatto */
+    font-size: 18px;
     font-weight: bold;
     margin-bottom: 10px;
 }
 
 .gestisciServizi-add-btn {
     display: inline-block;
-    padding: 8px 16px; /* Ridotto il padding del pulsante */
+    padding: 8px 16px;
     background-color: #007bff;
     border: none;
     border-radius: 5px;
     color: white;
     text-decoration: none;
     transition: background-color 0.3s ease;
-    margin-top: 10px; /* Ridotto il margine superiore */
+    margin-top: 10px;
 }
 
 .gestisciServizi-add-btn:hover {
@@ -1390,6 +1395,7 @@ form button[type="submit"]:hover {
     margin: 20px 0;
     font-size: 24px;
     font-weight: bold;
+    width: 100%;
 }
 
 .gestisciServizi-image {
@@ -1424,3 +1430,127 @@ form button[type="submit"]:hover {
     margin: 0;
     font-size: 16px;
 }
+
+/*----aboutPage----*/
+/*-- about page --*/
+.aboutPage-container {
+    padding: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.aboutPage-title h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+.aboutPage-content {
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 40px;
+    text-align: left;
+}
+
+.aboutPage-team {
+    margin-top: 40px;
+}
+
+.aboutPage-team h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+/* Modifica: Ridurre la dimensione delle card e aumentare il contrasto */
+.aboutPage-team-members {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    background-color: #f0f0f0; /* Aumenta il contrasto con uno sfondo più scuro */
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.aboutPage-team-member {
+    width: 30%; /* Riduce la larghezza delle card */
+    margin-bottom: 20px;
+    text-align: center;
+    background-color: #ffffff; /* Aumenta il contrasto delle card */
+    padding: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Aggiunge un'ombra alle card */
+    border-radius: 10px;
+}
+
+.aboutPage-team-member img {
+    width: 70%; /* Riduce la dimensione dell'immagine */
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.aboutPage-footer {
+    margin-top: 40px;
+    font-size: 14px;
+    color: #777;
+}
+/*---ContactPage--*/
+/* Stili per la pagina di contatto */
+.contactPage-container {
+    padding: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.contactPage-title {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.contactPage-subtitle {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.contactPage-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.contactPage-form-group {
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.contactPage-form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    text-align: left;
+}
+
+.contactPage-form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    resize: none;
+}
+
+.contactPage-btn {
+    padding: 10px 20px;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.contactPage-btn:hover {
+    background-color: #0056b3;
+}
+

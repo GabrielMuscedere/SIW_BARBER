@@ -43,12 +43,23 @@
 <div class="gestisciServizi-container">
     <div th:each="servizio : ${servizi}" class="gestisciServizi-card">
         <!-- Visualizza l'immagine del servizio -->
-        <img th:src="@{'/uploads/' + ${servizio.imageName}}" alt="Immagine del servizio" class="gestisciServizi-image"/>
+        <img th:src="@{'/uploads/' + ${servizio.getImageName()}}" alt="Immagine del servizio" class="gestisciServizi-image"/>
         <p class="gestisciServizi-title" th:text="${servizio.nome} + ' - ' + ${servizio.getDurata()} + ' minuti'"></p>
     </div>
 
     <a href="/admin/aggiungiServizio" class="gestisciServizi-add-btn">Aggiungi Servizio</a>
 </div>
+ <br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<footer class="footer">
+    <p>&copy; 2024 Barber App. Tutti i diritti riservati.</p>
+</footer>
+
 
 </body>
 </html>

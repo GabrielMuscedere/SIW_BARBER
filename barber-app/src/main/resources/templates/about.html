@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi Siamo | Barber App</title>
     <link rel="stylesheet" href="/css/styles.css">
-    <title>barber-app - about</title>
 </head>
 
 <body>
 <header>
-    <nav class="navbar" >
+    <nav class="navbar">
         <a href="/" class="logo">
             <img src="/images/logo.png" alt="Logo">
         </a>
@@ -23,15 +23,12 @@
                     <img src="/images/profile1.png" alt="profile">
                 </a>
                 <div class="dropdown-content">
-                    <!-- Check if user is authenticated -->
                     <div th:if="${authentication != null}">
-                        <!-- Display the profile link and the username -->
                         <a href="/profile">
                             <span th:text="${authentication.getUsername()}">Profile</span>
                         </a>
-                        <a href="/logout"><span>logout</span></a>
+                        <a href="/logout"><span>Logout</span></a>
                     </div>
-                    <!-- Display register and login links if user is not authenticated -->
                     <div th:if="${authentication == null}">
                         <a href="/register">Registrati</a>
                         <a href="/login">Login</a>
@@ -42,14 +39,49 @@
     </nav>
 </header>
 
+<main class="aboutPage-container">
+    <section class="aboutPage-title">
+        <h1>Chi Siamo</h1>
+    </section>
 
-<footer>
+    <section class="aboutPage-content">
+        <p>
+            Benvenuti su Barber App, il punto di riferimento per chi cerca servizi di barbiere di alta qualita'.
+            Il nostro team e' composto da professionisti con anni di esperienza, pronti a soddisfare ogni vostra esigenza.
+        </p>
+        <p>
+            Fondata nel cuore della citta', Barber App nasce con l'obiettivo di offrire un servizio esclusivo,
+            che combina tradizione e innovazione nel mondo della barberia.
+        </p>
+        <p>
+            Crediamo che il taglio di capelli non sia solo una necessita', ma un'esperienza. Per questo, ci impegniamo a creare
+            un ambiente rilassante e confortevole, dove ogni cliente possa sentirsi a proprio agio.
+        </p>
+    </section>
 
+    <section class="aboutPage-team">
+        <h2>Il Nostro Team</h2>
+        <div class="aboutPage-team-members">
+            <div th:each="barbiere : ${barbieri}" class="aboutPage-team-member">
+                <img th:src="@{'/uploads/' + ${barbiere.getImageUrl()}}" alt="Team Member">
+                <h3 th:text="${barbiere.getNome()} + ' ' + ${barbiere.getCognome()}">Nome Cognome</h3>
+            </div>
+            <div th:if="${barbieri.isEmpty()}">
+                <h3>Non ci sono barbieri nel sistema</h3>
+            </div>
+        </div>
+    </section>
+</main>
 
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<footer class="footer">
+    <p>&copy; 2024 Barber App. Tutti i diritti riservati.</p>
 </footer>
 
-
-
 </body>
-
 </html>
