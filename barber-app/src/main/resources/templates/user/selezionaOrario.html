@@ -42,12 +42,11 @@
 <div class="selezionaOrario-container">
     <h1 class="selezionaOrario-title">Scegli un orario disponibile</h1>
 
+    <!-- Blocco per visualizzare il messaggio di errore -->
+    <div th:if="${errorMessage} != null" class="error-message" th:text="${errorMessage}"></div>
+
     <div th:if="${orariDisponibili == null}">
         Non ci sono posti disponibili per questa giornata
-    </div>
-
-    <div th:if="${successMessage} != null">
-        <span th:text="${successMessage}"></span>
     </div>
 
     <div th:if="${!orariDisponibili.isEmpty()}">
@@ -61,6 +60,15 @@
         </div>
     </div>
 </div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 
 <footer class="footer">
     <p>&copy; 2024 Barber App. Tutti i diritti riservati.</p>

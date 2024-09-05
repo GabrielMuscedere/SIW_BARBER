@@ -794,9 +794,9 @@ form button[type="submit"]:hover {
 
 .days-container {
     display: flex;
+    justify-content: center; /* Centra le date */
     overflow-x: auto;
     scroll-behavior: smooth;
-    flex-grow: 1;
     padding: 10px;
     white-space: nowrap;
 }
@@ -808,6 +808,12 @@ form button[type="submit"]:hover {
     margin: 0 5px;
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.day-button:hover {
+    background-color: #d3d3d3;
+    transform: scale(1.05); /* Effetto di ingrandimento al passaggio del mouse */
 }
 
 .slider-btn {
@@ -816,6 +822,12 @@ form button[type="submit"]:hover {
     border: none;
     padding: 10px;
     cursor: pointer;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+}
+
+.slider-btn:hover {
+    opacity: 1; /* Più visibile al passaggio del mouse */
 }
 
 .prev-btn {
@@ -866,18 +878,7 @@ form button[type="submit"]:hover {
     color: #6a5acd;
 }
 
-
-/*---------------*/
-/*SELEZIONA DATA */
-/*---------------*/
-/* Centra l'h1 orizzontalmente, senza occupare l'intera altezza dello schermo */
-.centered-title {
-    text-align: center;
-    margin: 20px auto;
-    padding: 0 20px;
-}
-
-/* Sezione per selezionaData.html */
+/* Miglioramento del carosello delle date */
 .selezionaData-container {
     display: flex;
     justify-content: center;
@@ -890,38 +891,24 @@ form button[type="submit"]:hover {
 
 .selezionaData-carousel {
     display: flex;
-    align-items: center;
     justify-content: center;
-    width: 80%; /* Centra il carosello riducendo la larghezza */
+    align-items: center;
+    width: auto; /* Adatta la larghezza in base al contenuto */
     max-width: 100%;
     position: relative;
-    margin-left: auto; /* Aggiungi questa riga per centrare */
-    margin-right: auto; /* Aggiungi questa riga per centrare */
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .selezionaData-cards {
     display: flex;
+    justify-content: center; /* Centra le date anche con poche opzioni */
     overflow-x: auto;
     scroll-behavior: smooth;
     padding: 10px;
     flex-wrap: nowrap;
     width: 100%;
     margin: 0 auto;
-}
-
-/* Scrollbar visibile e grigia */
-.selezionaData-cards::-webkit-scrollbar {
-    height: 10px;
-}
-
-.selezionaData-cards::-webkit-scrollbar-track {
-    background: #e0e0e0; /* Colore grigio chiaro per il track */
-}
-
-.selezionaData-cards::-webkit-scrollbar-thumb {
-    background-color: #9e9e9e; /* Colore grigio per il thumb */
-    border-radius: 5px;
-    border: 3px solid #e0e0e0;
 }
 
 .selezionaData-card {
@@ -950,6 +937,30 @@ form button[type="submit"]:hover {
     transform: scale(1.05);
 }
 
+/* Miglioramento della visibilità dei pulsanti di scorrimento */
+.scroll-button.left, .scroll-button.right {
+    display: block !important;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.scroll-button.left {
+    left: 10px;
+}
+
+.scroll-button.right {
+    right: 10px;
+}
+
 /* Ombreggiatura ai bordi per indicare che si può scorrere */
 .selezionaData-container::before, .selezionaData-container::after {
     content: '';
@@ -970,10 +981,6 @@ form button[type="submit"]:hover {
     background: linear-gradient(to left, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
 }
 
-.scroll-button.left, .scroll-button.right {
-    display: none !important;
-}
-
 /* Media Queries per schermi più piccoli */
 @media (max-width: 768px) {
     .selezionaData-cards {
@@ -988,6 +995,20 @@ form button[type="submit"]:hover {
 /*---------------*/
 /*SELEZIONA ORARIO */
 /*---------------*/
+
+.error-message {
+    color: red;
+    font-size: 16px;
+    margin-bottom: 20px;
+    text-align: center;
+    animation: fadeOut 5s forwards;
+}
+
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { opacity: 0; display: none; }
+}
 
 /* Stile per la selezione degli orari */
 .selezionaOrario-container {

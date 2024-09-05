@@ -9,5 +9,5 @@ import java.time.LocalTime;
 
 @Repository
 public interface ServizioPrenotatoRepository extends CrudRepository<ServizioPrenotato, Long> {
-   // boolean existsByBarbiereIdAndDataAndOrarioInizioLessThanAndOrarioFineGreaterThan(Long idBarbiere, LocalDate data, LocalTime orarioFine, LocalTime orarioInizio);
+    public boolean existsByUtenteIdAndGiornoLavorativo_Data(Long utenteId, LocalDate dataPrenotazione);
 }

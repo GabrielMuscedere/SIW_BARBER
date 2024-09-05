@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+
 @Service
 public class ServizioPrenotatoService {
 
@@ -24,5 +26,9 @@ public class ServizioPrenotatoService {
 
     public ServizioPrenotato findById(Long id) {
         return servizioPrenotatoRepository.findById(id).get();
+    }
+
+    public boolean existsByUtenteIdAndGiornoLavorativo_Data(Long utenteId, LocalDate dataPrenotazione) {
+        return  servizioPrenotatoRepository.existsByUtenteIdAndGiornoLavorativo_Data(utenteId, dataPrenotazione);
     }
 }

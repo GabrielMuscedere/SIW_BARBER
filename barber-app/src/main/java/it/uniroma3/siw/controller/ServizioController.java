@@ -132,24 +132,36 @@ public class ServizioController {
         return "user/selezionaOrario";
     }
 
+
     @GetMapping("/user/prenotaServizio/{idGiorno}/{orario}/{idServizio}")
     public String prenotaServizio(@PathVariable Long idGiorno,
                                   @PathVariable String orario,
                                   @PathVariable Long idServizio,
                                   @AuthenticationPrincipal CustomUserDetails userDetails,
-                                  RedirectAttributes redirectAttributes){
+                                  RedirectAttributes redirectAttributes,
+                                  @ModelAttribute("servizioPrenotato") ServizioPrenotato servizioPrenotato,
+                                  BindingResult result){
 
         Servizio servizio = servizioService.findById(idServizio);
         GiornoLavorativo giornoLavorativo = giornoLavorativoService.findById(idGiorno);
         LocalTime orarioInizio = LocalTime.parse(orario);
 
-        ServizioPrenotato servizioPrenotato = new ServizioPrenotato();
+        servizioPrenotato = new ServizioPrenotato();
 
         servizioPrenotato.setOrarioInizio(orarioInizio);
         servizioPrenotato.setOrarioFine(orarioInizio.plusMinutes(servizio.getDurata()));
         servizioPrenotato.setTipoServizio(servizio);
-        servizioPrenotato.setGiornoLavorativo(giornoLavorativoService.findById(idGiorno));
+        servizioPrenotato.setGiornoLavorativo(giornoLavorativo);
         servizioPrenotato.setUtente(userDetails.getUtente());
+
+        // Validazione
+        servizioPrenotatoValidator.validate(servizioPrenotato, result);
+
+        if (result.hasErrors()) {
+            // Se ci sono errori, aggiungi un messaggio di errore temporaneo e reindirizza
+            redirectAttributes.addFlashAttribute("errorMessage", result.getFieldError().getDefaultMessage());
+            return "redirect:/user/" + giornoLavorativo.getId() + "/" + servizio.getId();
+        }
 
         servizioPrenotatoService.save(servizioPrenotato);
 
@@ -162,40 +174,33 @@ public class ServizioController {
         return "redirect:/profile";
     }
 
-    @PostMapping("/user/delete/{id}")
+    @GetMapping("/user/delete/{id}")
     public String deletePrenotazione(@PathVariable Long id,
                                      RedirectAttributes redirectAttributes) {
 
         ServizioPrenotato servizioPrenotato = servizioPrenotatoService.findById(id);
-        Long idGiorno = servizioPrenotato.getGiornoLavorativo().getId();
-        Servizio servizio = servizioPrenotato.getTipoServizio();
+        GiornoLavorativo giornoLavorativo = servizioPrenotato.getGiornoLavorativo();
+        Utente utente = servizioPrenotato.getUtente();
 
-        if (servizioPrenotato != null) {
-            GiornoLavorativo giornoLavorativo = servizioPrenotato.getGiornoLavorativo();
-            Utente utente = servizioPrenotato.getUtente();
-
-            if (giornoLavorativo != null) {
-                giornoLavorativo.getPrestazioni().remove(servizioPrenotato); // Rimuove l'associazione
-                giornoLavorativoService.save(giornoLavorativo);
-            }
-
-            if (utente != null) {
-                utente.getPrenotazioni().remove(servizioPrenotato);
-                utenteService.save(utente);
-            }
-
-            servizioPrenotatoService.delete(servizioPrenotato); // Elimina il servizio prenotato
-            redirectAttributes.addFlashAttribute("successMessage", "Prenotazione eliminata con successo.");
-
-            //return "redirect:/user/idGiorno /{nomeServizio}";
-            return "redirect:/profile";
-            //session.invalidate();
-
-        } else {
+        if (servizioPrenotato == null){
             redirectAttributes.addFlashAttribute("errors", "Prenotazione non trovata.");
             return "redirect:/profile";
         }
 
+        if (giornoLavorativo != null) {
+            giornoLavorativo.getPrestazioni().remove(servizioPrenotato); // Rimuove l'associazione
+            giornoLavorativoService.save(giornoLavorativo);
+        }
+
+        if (utente != null) {
+            utente.getPrenotazioni().remove(servizioPrenotato);
+            utenteService.save(utente);
+        }
+
+        servizioPrenotatoService.delete(servizioPrenotato); // Elimina il servizio prenotato
+        redirectAttributes.addFlashAttribute("successMessage", "Prenotazione eliminata con successo.");
+
+        return "redirect:/profile";
     }
 
     @GetMapping("/admin/gestisciServizi")
