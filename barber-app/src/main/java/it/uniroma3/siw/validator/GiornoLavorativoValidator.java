@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Component
@@ -23,6 +24,19 @@ public class GiornoLavorativoValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         GiornoLavorativo giornoLavorativo = (GiornoLavorativo) target;
+
+        //controllo se il giorno è futuro
+        boolean isPrima = giornoLavorativo.getData().isBefore(LocalDate.now());
+
+        if (isPrima) {
+            errors.rejectValue("data", "giornoLavorativo.data.passata", "non puoi assegnare un turno in un giorno passato.");
+        }
+
+        boolean isOggi = giornoLavorativo.getData().isEqual(LocalDate.now());
+
+        if (isOggi) {
+            errors.rejectValue("data", "giornoLavorativo.data.odierna", "non puoi assegnare un turno oggi.");
+        }
 
         // Controllo se esiste già un turno per questo barbiere nello stesso giorno
         boolean esisteGia = giornoLavorativoRepository.existsByBarbiereAndData(giornoLavorativo.getBarbiere(), giornoLavorativo.getData());
