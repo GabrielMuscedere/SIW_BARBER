@@ -38,7 +38,7 @@
 </header>
 
 <main class="barber-selection-container">
-    <h2 class="center-title">Barbieri</h2>
+    <h2 class="center-title">Seleziona un barbiere a cui vuoi aggiungere il turno</h2>
     <div class="barber-card-container">
         <div th:each="barber : ${barbers}" class="barber-card">
             <a th:href="@{'/admin/giorniLavorativi/' + ${barber.id}}" class="barber-link">

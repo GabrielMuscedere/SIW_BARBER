@@ -1,16 +1,14 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="it">
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/styles.css">
-    <title>barber-app - AdminProfile</title>
+    <title>Admin Profile</title>
 </head>
-
 <body>
 <header>
-    <nav class="navbar" >
+    <nav class="navbar">
         <a href="/admin/indexAdmin" class="logo">
             <img src="/images/logo.png" alt="Logo">
         </a>
@@ -21,31 +19,44 @@
                     <img src="/images/profile1.png" alt="profile">
                 </a>
                 <div class="dropdown-content">
-                    <!-- Check if user is authenticated -->
-                    <div th:if="${authentication != null}">
-                        <!-- Display the profile link and the username -->
-                        <a href="/profile">
-                            <span th:text="${authentication.getUsername()}">Profile</span>
-                        </a>
-                        <a href="/logout"><span>logout</span></a>
-                    </div>
-                    <!-- Display register and login links if user is not authenticated -->
-                    <div th:if="${authentication == null}">
-                        <a href="/register">Registrati</a>
-                        <a href="/login">Login</a>
-                    </div>
+                    <a href="/profile">
+                        <span th:text="${authentication.getUsername()}">Profile</span>
+                    </a>
+                    <a href="/logout"><span>logout</span></a>
                 </div>
             </div>
         </div>
     </nav>
 </header>
 
-PROFILO DELL'ADMIN
+<!-- Sezione del profilo dell'admin -->
+<div class="adminProfile">
+    <div class="profile-card">
+        <div class="profile-header">
+            <img src="/images/profile1.png" alt="Admin" class="profile-picture">
+            <h1>Benvenuto, Admin!</h1>
+            <p>Amministratore del sistema</p>
+        </div>
+        <div class="profile-body">
+            <p><strong>Email:</strong> admin@example.com</p>
+            <p><strong>Ruolo:</strong> Super Admin</p>
+            <p><strong>Ultimo accesso:</strong> 2024-09-05 14:30</p>
+        </div>
+        <div class="profile-actions">
+
+            <a href="/admin/indexAdmin" class="btn">vai nell'index per effettuare le modifiche al tuo salone</a>
+
+        </div>
+    </div>
+</div>
+
+<br>
+<br>
+<br>
+<br>
+
 <footer class="footer">
     <p>&copy; 2024 Barber App. Tutti i diritti riservati.</p>
 </footer>
-
-
-
-
 </body>
+</html>
