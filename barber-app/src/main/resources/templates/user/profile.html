@@ -57,6 +57,17 @@
     <span th:text="${successMessage}"></span>
 </div>
 
+<!--
+<div>
+    <form th:action="@{'/user/profile/filtraPerData'}" method="post">
+        <label>
+            <input type="date" name="data" placeholder="Ricerca per data">
+        </label>
+        <button type="submit"> Cerca </button>
+    </form>
+</div>
+-->
+
 <div class="userProfile-container">
     <div class="userProfile-cards">
         <div th:each="prenotazione : ${prenotazioni}" class="userProfile-card">

@@ -176,13 +176,16 @@ public class ServizioController {
 
     @GetMapping("/user/delete/{id}")
     public String deletePrenotazione(@PathVariable Long id,
-                                     RedirectAttributes redirectAttributes) {
+                                     RedirectAttributes redirectAttributes,
+                                     @AuthenticationPrincipal CustomUserDetails userDetails) {
+
+
 
         ServizioPrenotato servizioPrenotato = servizioPrenotatoService.findById(id);
         GiornoLavorativo giornoLavorativo = servizioPrenotato.getGiornoLavorativo();
         Utente utente = servizioPrenotato.getUtente();
 
-        if (servizioPrenotato == null){
+        if (!servizioPrenotato.getUtente().getId().equals(userDetails.getUtente().getId())){
             redirectAttributes.addFlashAttribute("errors", "Prenotazione non trovata.");
             return "redirect:/profile";
         }

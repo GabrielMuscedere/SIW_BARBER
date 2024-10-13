@@ -72,6 +72,11 @@
 	<h1>Prenota un servizio con un nostro Barbiere!</h1>
 	<div th:if="${barbieri.isEmpty()}">Non ci sono barbieri nel sistema</div>
 
+	<div>
+		<h3> Numero barbieri presenti nel sistema:</h3>
+		<h3 th:text="${barbieri.size()}"></h3>
+	</div>
+
 	<div th:each="barbiere : ${barbieri}" class="barberHomePage-section">
 		<a href="/login">
 			<div class="barberHomePage-image">
